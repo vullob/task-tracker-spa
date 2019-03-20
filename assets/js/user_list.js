@@ -4,18 +4,16 @@ import _ from 'lodash';
 
 function UserList(props) {
   let rows = _.map(props.users, (uu) => <User key={uu.id} user={uu} />);
-  return <div className="row">
-    <div className="col-12">
-      <table className="table table-striped">
+  return  <table className="table table-striped">
         <thead>
-          <th>Email</th>
+          <tr>
+            <th>Email</th>
+          </tr>
         </thead>
         <tbody>
           {rows}
         </tbody>
       </table>
-    </div>
-  </div>;
 }
 
 function User(props) {

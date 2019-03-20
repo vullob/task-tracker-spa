@@ -4,20 +4,19 @@ import _ from 'lodash';
 
 function TaskList(props) {
   let rows = _.map(props.tasks, (task) => <Task key={task.id} task={task} />);
-  return <div className="row">
-    <div className="col-12">
-      <table className="table table-striped">
+  return <table className="table table-striped">
         <thead>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Completed</th>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Completed</th>
+            <th>Assigned To</th>
+          </tr>
         </thead>
         <tbody>
           {rows}
         </tbody>
       </table>
-    </div>
-  </div>;
 }
 
 function Task(props) {
@@ -26,6 +25,7 @@ function Task(props) {
     <td>{task.title}</td>
     <td>{task.description}</td>
     <td>{task.completed ? "true" : "false"}</td>
+    <td>{task.user.email ? task.user.email : "not assigned"}</td>
   </tr>
 }
 
