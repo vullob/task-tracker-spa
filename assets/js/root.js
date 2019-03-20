@@ -8,6 +8,7 @@ import api from './api'
 import UserList from './user_list'
 import UserInfo from './user_info'
 import TaskList from './task_list'
+import Modal from './modal'
 export default function root_init(node, store) {
   ReactDOM.render(
     <Provider store={store}>
@@ -29,10 +30,11 @@ class Root extends React.Component {
       <Router>
         <Header/>
         <div>
-                   <div className="row" style={{paddingTop: "70px"}}>
+          <div className="row" style={{paddingTop: "70px"}}>
             <Route path="/users" exact={true} component={UserList}/>
             <Route path="/tasks" exact={true} component={TaskList}/>
           </div>
+        <button type="button" className="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
         </div>
       </Router>
     </div>

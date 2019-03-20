@@ -1,6 +1,24 @@
 import { createStore, combineReducers } from 'redux'
 
+function taskModal(state = false, action) {
+  switch (action.type) {
+      case 'SHOW_TASK_MODAL':
+        return true;
+      case 'HIDE_TASK_MODAL':
+        return false;
+      default:
+        return state;
+  }
+}
 
+function selectedTask(state = null, action){
+    switch (action.type) {
+      case 'SET_TASK':
+        return action.data;
+      default:
+        return state;
+    }
+}
 
 function users(state = [], action) {
   switch (action.type) {
@@ -32,7 +50,7 @@ function tasks(state = [], action) {
 
 function root_reducer(state0, action) {
     console.log('reducer', state0, action);
-    const reducer = combineReducers({users, session, tasks});
+    const reducer = combineReducers({users, session, tasks, selectedTask, taskModal});
     const state1 = reducer(state0, action);
     return state1;
 }
