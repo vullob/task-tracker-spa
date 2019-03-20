@@ -12,6 +12,28 @@ class TheServer {
     });
   }
 
+  fetch_users() {
+    this.fetch_path(
+      "api/v1/users",
+      (resp) => {
+        store.dispatch({
+          type: 'USER_LIST',
+          data: resp.data
+        })
+      })
+  }
+
+  fetch_tasks() {
+    this.fetch_path(
+      "api/v1/tasks",
+      (resp) => {
+        store.dispatch({
+          type: 'TASK_LIST',
+          data: resp.data
+        })
+      })
+  }
+
   send_post(path, data, callback) {
     $.ajax(path, {
       method: "post",

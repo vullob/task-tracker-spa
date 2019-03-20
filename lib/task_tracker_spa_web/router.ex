@@ -16,6 +16,8 @@ defmodule TaskTrackerSpaWeb.Router do
   scope "/", TaskTrackerSpaWeb do
     pipe_through :browser
     get "/", PageController, :index
+    get "/users", PageController, :index
+    get "/tasks", PageController, :index
   end
 
    scope "/api/v1", TaskTrackerSpaWeb do
