@@ -2,15 +2,23 @@ import React from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
+import api from './api'
 import TaskForm from './task_form.js'
 class Modal extends React.Component {
     constructor (props) {
       super(props)
       this.closeModal = this.closeModal.bind(this)
+      this.saveForm = this.saveForm.bind(this)
     }
 
   componentDidMount(){
     $('#taskModal').modal("show")
+  }
+
+  saveForm(){
+    const { taskForm } = this.props
+    api.update_task(taskForm)
+    this.closeModal();
   }
 
   closeModal(){
@@ -19,6 +27,8 @@ class Modal extends React.Component {
     }
     this.props.dispatch(action)
     $('#taskModal').modal("hide")
+    api.fetch_tasks();
+    api.fetch_users();
   }
 
   render() {
@@ -37,7 +47,7 @@ class Modal extends React.Component {
             </div>
                 <div className="modal-footer">
               <button onClick={this.closeModal} type="button" className="btn btn-secondary">Close</button>
-              <button type="button" className="btn btn-primary">Save changes</button>
+              <button type="button" onClick={this.saveForm} className="btn btn-primary">Save changes</button>
             </div>
           </div>
         </div>
@@ -46,4 +56,4 @@ class Modal extends React.Component {
   }
 }
 
-export default connect((state) => {return {users: state.users, selectedTask: state.selectedTask, tasks: state.tasks };})(Modal);
+export default connect((state) => {return {users: state.users, selectedTask: state.selectedTask, tasks: state.tasks, taskForm: state.taskForm};})(Modal);

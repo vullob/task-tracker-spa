@@ -33,8 +33,7 @@ function updateSelectedTask(task, dispatch){
    const modalAction = {
     type: 'SHOW_TASK_MODAL',
   }
- const {title, description, completed, user} = task
- const taskFormAction = {type: 'SET_TASK_FORM', data: {title, description, completed, user}}
+ const taskFormAction = {type: 'SET_TASK_FORM', data: task}
   dispatch(taskFormAction)
   dispatch(action)
   dispatch(modalAction)

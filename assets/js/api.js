@@ -54,6 +54,23 @@ class TheServer {
         });
       });
   }
+
+  send_put(path, data, callback) {
+    $.ajax(path, {
+      method: "patch",
+      dataType: "json",
+      contentType: "application/json; charset=UTF-8",
+      data: JSON.stringify(data),
+      success: callback,
+    });
+  }
+
+  update_task(task) {
+    console.log(task)
+    this.send_put(`/api/v1/tasks/${task.id}`,
+      {id: task.id, task},
+      (resp) => { console.log(resp.data)})
+  }
 }
 
 export default new TheServer()
