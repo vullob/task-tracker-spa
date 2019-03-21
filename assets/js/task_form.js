@@ -10,7 +10,7 @@ class TaskForm extends React.Component {
       this.changeDescription = this.changeDescription.bind(this)
       this.changeCompleted = this.changeCompleted.bind(this)
       this.changeTitle = this.changeTitle.bind(this)
-
+      this.changeMinutesSpent = this.changeMinutesSpent.bind(this)
     }
 
   changeDescription(event) {
@@ -41,6 +41,10 @@ class TaskForm extends React.Component {
     this.props.dispatch({type: 'UPDATE_TASK_TITLE', data: e.target.value})
   }
 
+  changeMinutesSpent(e){
+    this.props.dispatch({type: 'UPDATE_TASK_MINUTES', data: e.target.value})
+  }
+
   getUserSelect(){
     const { users } = this.props;
     const userOptions = users.map((user) => <option key={user.id} value={user.id}>{user.email}</option>);
@@ -52,7 +56,8 @@ class TaskForm extends React.Component {
     const {title,
              completed,
              description,
-             user} = this.props
+      user,
+    minutes_spent} = this.props
     return <React.Fragment>
                 <div className="row">
                   <div className="col-12">
@@ -70,6 +75,12 @@ class TaskForm extends React.Component {
                    <div className="col-12">
                     <label htmlFor="completed">Completed</label>
                     <input className="form-control" id="completed" type="checkbox" onChange={this.changeCompleted} value={completed}/>
+                  </div>
+                </div>
+               <div className="row">
+                   <div className="col-12">
+                    <label htmlFor="minutesSpent">Minutes Spent</label>
+                    <input className="form-control" id="completed" step={15} min={0} type="number" onChange={this.changeMinutesSpent} value={minutes_spent}/>
                   </div>
                 </div>
                 <div className="row">

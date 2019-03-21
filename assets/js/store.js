@@ -35,12 +35,14 @@ function taskForm(state = {
         return {...state, completed: action.data}
       case 'UPDATE_TASK_USER':
         return {...state, user: action.data}
+      case 'UPDATE_TASK_MINUTES':
+        return {...state, minutes_spent: action.data}
       default:
           return state;
     }
 }
 
-function modal(state = {show: false, type: ''}, action) {
+function modal(state = {show: false, type: '', errors: []}, action) {
   switch (action.type) {
       case 'SHOW_MODAL':
         return {...state, show: true};
@@ -48,6 +50,10 @@ function modal(state = {show: false, type: ''}, action) {
         return {...state, show: false};
       case 'SET_MODAL_TYPE':
         return {...state, type: action.data}
+      case 'SET_MODAL_ERRORS':
+        return {...state, errors: action.data}
+      case 'CLEAR_MODAL_ERRORS':
+        return {...state, errors: []}
       default:
         return state;
   }

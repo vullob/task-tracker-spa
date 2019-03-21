@@ -12,11 +12,11 @@ class Modal extends React.Component {
     }
 
   componentDidMount(){
-    $('#Modal').modal("show")
+    $('#Modal').modal({keyboard: false, backdrop: "static"})
   }
 
   saveForm(){
-    const { taskForm, modal: {type}, userForm} = this.props
+    const { taskForm, modal: {type, errors}, userForm, dispatch} = this.props
     switch (type){
       case 'editTask':
         api.update_task(taskForm);
@@ -29,17 +29,27 @@ class Modal extends React.Component {
         break;
       default:
     }
-    this.closeModal();
   }
 
   closeModal(){
+    const clearModalErrors = {
+          type: "CLEAR_MODAL_ERRORS",
+        }
     const action = {
       type:"HIDE_MODAL",
     }
+    this.props.dispatch(clearModalErrors)
     this.props.dispatch(action)
     $('#Modal').modal("hide")
     api.fetch_tasks();
     api.fetch_users();
+  }
+
+  renderModalErrors(){
+    const { modal: {errors} } = this.props
+    console.log(errors)
+    return errors.map((e) =>  <div className="alert alert-danger">
+                          <strong>An Error Occurred</strong>{e}</div>)
   }
 
   render() {
@@ -58,6 +68,7 @@ class Modal extends React.Component {
               </button>
             </div>
             <div className="modal-body">
+              {this.renderModalErrors()}
               {(type == 'editTask' || type == 'createTask') && <TaskForm/>}
               {type == 'createUser' && <UserForm/>}
             </div>
