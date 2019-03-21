@@ -27,7 +27,7 @@ defmodule TaskTrackerSpa.Users do
 
   def get_and_auth_user(email, password) do
     user = get_user_by_email(email)
-    pwrd = Comeonin.Argon2.check_pass(user, password)
+    pwrd = Argon2.check_pass(user, password)
     case pwrd do
       {:ok, user} -> user
       _else -> nil

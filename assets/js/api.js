@@ -37,7 +37,7 @@ class TheServer {
   }
 
   send_post(path, data, callback, error) {
-    if (!sessionStorage.getItem('token') && !path.includes('sessions')) return;
+    if (!sessionStorage.getItem('token') && !path.includes('sessions') && !path.includes("users")) return;
     $.ajax(path, {
       method: "post",
       dataType: "json",
