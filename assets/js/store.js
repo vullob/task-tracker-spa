@@ -1,5 +1,18 @@
 import { createStore, combineReducers } from 'redux'
 
+function userForm(state = { email: "", password: ""}, action){
+    switch (action.type) {
+      case 'RESET_USER_FORM':
+        return { email: "", password: ""};
+      case 'UPDATE_USER_EMAIL':
+        return {...state, email: action.data};
+      case 'UPDATE_USER_PASSWORD':
+        return {...state, password: action.data};
+      default:
+        return state;
+    }
+}
+
 function taskForm(state = {
                             title: "",
                             description: "",
@@ -78,7 +91,14 @@ function tasks(state = [], action) {
 
 function root_reducer(state0, action) {
     console.log('reducer', state0, action);
-    const reducer = combineReducers({users, session, tasks, selectedTask, modal, taskForm});
+    const reducer = combineReducers({
+                                    users,
+                                    session,
+                                    tasks,
+                                    selectedTask,
+                                    modal,
+                                    taskForm,
+                                    userForm});
     const state1 = reducer(state0, action);
     return state1;
 }

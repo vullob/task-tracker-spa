@@ -14,6 +14,7 @@ class UserLogin extends React.Component {
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onRegister = this.onRegister.bind(this)
   }
 
   onPasswordChange(event) {
@@ -24,6 +25,13 @@ class UserLogin extends React.Component {
     this.setState({email: event.target.value});
   }
 
+  onRegister() {
+    const {email, password} = this.state;
+    api.create_user(email, password)
+    api.fetch_users();
+    api.fetch_tasks();
+  }
+
   onSubmit() {
     const {email, password} = this.state;
     api.create_session(email, password);
@@ -32,11 +40,20 @@ class UserLogin extends React.Component {
   }
 
   render() {
-    return <div className="form-inline">
-              <input type="email" placeholder="Email" className="form-control" onChange={this.onEmailChange}></input>
-              <input type="password" placeholder="Password" className="form-control" onChange={this.onPasswordChange}></input>
-              <button type="button" className="btn btn-default" onClick={this.onSubmit}>Submit</button>
-          </div>
+    return <div className="row">
+              <div className="col-4">
+                <input type="email" placeholder="Email" className="form-control" onChange={this.onEmailChange}></input>
+              </div>
+              <div className="col-4">
+                <input type="password" placeholder="Password" className="form-control" onChange={this.onPasswordChange}></input>
+              </div>
+              <div className="col-2">
+                <button type="button" className="btn btn-primary" onClick={this.onSubmit}>Login</button>
+              </div>
+              <div className="col-2">
+                <button type="button" className="btn btn-primary" onClick={this.onRegister}>Register</button>
+              </div>
+            </div>
   }
 }
 

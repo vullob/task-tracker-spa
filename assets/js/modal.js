@@ -16,13 +16,16 @@ class Modal extends React.Component {
   }
 
   saveForm(){
-    const { taskForm, modal: {type} } = this.props
+    const { taskForm, modal: {type}, userForm} = this.props
     switch (type){
       case 'editTask':
         api.update_task(taskForm);
         break;
       case 'createTask':
         api.create_task(taskForm);
+        break;
+      case 'createUser':
+        api.create_user(userForm);
         break;
       default:
     }
@@ -56,6 +59,7 @@ class Modal extends React.Component {
             </div>
             <div className="modal-body">
               {(type == 'editTask' || type == 'createTask') && <TaskForm/>}
+              {type == 'createUser' && <UserForm/>}
             </div>
                 <div className="modal-footer">
               <button onClick={this.closeModal} type="button" className="btn btn-secondary">Close</button>
@@ -68,4 +72,4 @@ class Modal extends React.Component {
   }
 }
 
-export default connect((state) => {return {users: state.users, selectedTask: state.selectedTask, tasks: state.tasks, taskForm: state.taskForm, modal: state.modal};})(Modal);
+export default connect((state) => {return {users: state.users, selectedTask: state.selectedTask, tasks: state.tasks, taskForm: state.taskForm, modal: state.modal, userForm: state.userForm};})(Modal);

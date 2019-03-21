@@ -12,6 +12,7 @@ defmodule TaskTrackerSpaWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
+    "GOT CREATE USER REQUEST" |> IO.inspect
     with {:ok, %User{} = user} <- Users.create_user(user_params) do
       conn
       |> put_status(:created)

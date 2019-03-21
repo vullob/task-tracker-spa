@@ -69,6 +69,7 @@ defmodule TaskTrackerSpa.Users do
 
   """
   def create_user(attrs \\ %{}) do
+    attrs = Map.put(attrs, "password_hash", Argon2.hash_pwd_salt(Map.get(attrs, "password")))
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert()

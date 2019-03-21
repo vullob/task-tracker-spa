@@ -17,10 +17,11 @@ defmodule TaskTrackerSpa.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :password_hash, :password_comfirmation])
+    |> cast(attrs, [:email, :password_hash])
     |> validate_confirmation(:password)
     |> validate_password(:password)
     |> put_pass_hash()
+    |> validate_format(:email, ~r/@/)
     |> validate_required([:email, :password_hash])
   end
 

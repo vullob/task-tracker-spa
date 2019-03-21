@@ -19,7 +19,6 @@ export default function root_init(node, store) {
 class Root extends React.Component {
   constructor(props) {
     super(props);
-    api.create_session("brian.vullo@gmail.com", "pass1");
     api.fetch_users();
     api.fetch_tasks();
   }
@@ -42,7 +41,7 @@ class Root extends React.Component {
 
 function Header(props) {
  return <div className="row my-2">
-            <div className="col-4">
+            <div className="col-2">
               <h1><Link to="/">Task Tracker</Link></h1>
               </div>
               <div className="col-2">
@@ -55,7 +54,7 @@ function Header(props) {
                     <Link to="/tasks">Tasks</Link>
                   </h2>
                 </div>
-              <div className="col-4">
+              <div className="col-6">
                 <UserInfo/>
             </div>
           </div>

@@ -55,6 +55,14 @@ class TheServer {
       });
   }
 
+  create_user(email, password) {
+    this.send_post('/api/v1/users',
+      {user: {email, password}},
+      (resp) => {
+        console.log(resp.data)
+      })
+  }
+
   create_task(task) {
     const newId = task.user ? task.user.id : 0;
     this.send_post('/api/v1/tasks',
