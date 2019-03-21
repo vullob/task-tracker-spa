@@ -48,7 +48,7 @@ class TaskForm extends React.Component {
   getUserSelect(){
     const { users } = this.props;
     const userOptions = users.map((user) => <option key={user.id} value={user.id}>{user.email}</option>);
-    userOptions.push(<option value={0}></option>)
+    userOptions.push(<option key={0} value={0}></option>)
     return userOptions
   }
 
@@ -62,13 +62,13 @@ class TaskForm extends React.Component {
                 <div className="row">
                   <div className="col-12">
                     <label htmlFor="title">Title</label>
-                    <input className="form-control" type="text" id="title" value={title} onChange={this.changeTitle}/>
+                    <input className="form-control" type="text" maxLength={255} id="title" value={title} onChange={this.changeTitle}/>
                   </div>
                 </div>
                  <div className="row">
                   <div className="col-12">
                     <label htmlFor="description">Description</label>
-                    <input className="form-control" id="description" type="text" value={description} onChange={this.changeDescription}/>
+                    <input className="form-control" id="description" maxLength={255} type="text" value={description} onChange={this.changeDescription}/>
                   </div>
                 </div>
                <div className="row">

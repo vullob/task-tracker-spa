@@ -9,10 +9,12 @@ import UserList from './user_list'
 import UserInfo from './user_info'
 import TaskList from './task_list'
 import Modal from './modal'
+import LoginText from './login_text'
+
 export default function root_init(node, store) {
   ReactDOM.render(
     <Provider store={store}>
-      <Root products={window.products} />
+      <Root/>
     </Provider>, node);
 }
 
@@ -24,14 +26,14 @@ class Root extends React.Component {
   }
 
   render() {
-    const { user } = this.props
     return <div className="container" style={{height: "100vh"}, {width: "100vw"}}>
       <Router>
         <Header/>
+        <LoginText/>
         <div>
           <div className="row" style={{paddingTop: "70px"}}>
             <Route path="/users" exact={true} component={UserList}/>
-            <Route path="/tasks" exact={true} component={TaskList}/>
+            <Route path="/" exact={true} component={TaskList}/>
           </div>
         </div>
       </Router>
@@ -51,7 +53,7 @@ function Header(props) {
               </div>
               <div className="col-2">
                    <h2>
-                    <Link to="/tasks">Tasks</Link>
+                    <Link to="/">Tasks</Link>
                   </h2>
                 </div>
               <div className="col-6">

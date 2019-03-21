@@ -18,9 +18,11 @@ class UserInfo extends React.Component {
 
   logout(){
     const { dispatch } = this.props;
+    sessionStorage.clear()
     dispatch({
       type: 'CLOSE_SESSION'
     })
+    window.location.reload(true)
   }
 
   render() {

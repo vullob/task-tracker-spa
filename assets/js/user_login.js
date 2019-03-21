@@ -15,6 +15,13 @@ class UserLogin extends React.Component {
     this.onEmailChange = this.onEmailChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onRegister = this.onRegister.bind(this)
+    if(sessionStorage.getItem('token')){
+      props.dispatch({
+        type: 'NEW_SESSION',
+        data: {token: sessionStorage.getItem('token'),
+                user_id: sessionStorage.getItem('user')}
+      })
+    }
   }
 
   onPasswordChange(event) {
@@ -44,7 +51,7 @@ class UserLogin extends React.Component {
     return <React.Fragment>
       <div className="row">
               <div className="col-4">
-                <input type="email" placeholder="Email" className="form-control" onChange={this.onEmailChange}></input>
+                <input type="email" placeholder="Email" maxLength={255} className="form-control" onChange={this.onEmailChange}></input>
               </div>
               <div className="col-4">
                 <input type="password" placeholder="Password" className="form-control" onChange={this.onPasswordChange}></input>

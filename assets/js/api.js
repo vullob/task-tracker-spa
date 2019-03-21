@@ -3,12 +3,14 @@ import store from './store'
 
 class TheServer {
   fetch_path(path, callback) {
+    if (!sessionStorage.getItem('token')) return;
     $.ajax(path, {
       method: "get",
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
       data: "",
       success: callback,
+      headers: {"x-auth": sessionStorage.getItem('token')}
     });
   }
 
@@ -35,13 +37,15 @@ class TheServer {
   }
 
   send_post(path, data, callback, error) {
+    if (!sessionStorage.getItem('token') && !path.includes('sessions')) return;
     $.ajax(path, {
       method: "post",
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
       data: JSON.stringify(data),
       success: callback,
-      error: error
+      error: error,
+      headers: {"x-auth": sessionStorage.getItem('token')}
     });
   }
 
@@ -49,6 +53,8 @@ class TheServer {
     this.send_post("/api/v1/sessions",
       {email, password},
       (resp) => {
+        sessionStorage.setItem('token', resp.data.token)
+        sessionStorage.setItem('user', resp.data.user_id)
         store.dispatch({
           type: 'CLEAR_LOGIN_ERROR'
         })
@@ -56,6 +62,8 @@ class TheServer {
           type: "NEW_SESSION",
           data: resp.data,
         })
+        this.fetch_users()
+        this.fetch_tasks()
       },
         (resp) =>{
           console.log(resp)
@@ -108,13 +116,15 @@ class TheServer {
   }
 
   send_put(path, data, callback, error) {
+    if (!sessionStorage.getItem('token')) return;
     $.ajax(path, {
       method: "patch",
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
       data: JSON.stringify(data),
       success: callback,
-      error: error
+      error: error,
+      headers: {"x-auth": sessionStorage.getItem('token')}
     });
   }
 

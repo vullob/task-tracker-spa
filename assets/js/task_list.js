@@ -5,32 +5,31 @@ import _ from 'lodash';
 import Modal from './modal'
 
 function TaskList(props) {
+  const { session } = props
   let rows = _.map(props.tasks, (task) => <Task {...{key: task.id, task, dispatch: props.dispatch}} />);
   return <React.Fragment>
-    <button type="button" className="btn btn-primary btn-lg" onClick={() => createTask(props.dispatch)}>Create New Task</button>
-    <table className="table table-striped">
+    {session && <button type="button" className="btn btn-primary btn-lg" onClick={() => createTask(props.dispatch)}>Create New Task</button>}
+    {session && <table className="table table-striped">
         <thead>
           <tr>
             <th>Title</th>
             <th>Description</th>
             <th>Completed</th>
             <th>Assigned To</th>
+            <th>Minutes Spent</th>
+            <th>Completed</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           {rows}
         </tbody>
-      </table>
+      </table>}
     {props.modal.show && <Modal/>}
     </React.Fragment>
 }
 
 function createTask(dispatch) {
-  //  const setTaskAction = {  might not need to do this since we have the modal type
-  //  type: 'SET_TASK',
-  //    data: undefined
-  //}
   const modalAction = {
     type: 'SHOW_MODAL'
   }
@@ -73,9 +72,11 @@ function Task(props) {
     <td>{task.description}</td>
     <td>{task.completed ? "true" : "false"}</td>
     <td>{task.user ? task.user.email : "not assigned"}</td>
+    <td>{task.minutes_spent}</td>
+    <td>{task.completed ? 'yes' : 'no'}</td>
     <td><button className="btn btn-secondary" onClick={(e) => updateSelectedTask(task, dispatch)}>Edit</button></td>
   </tr>
 }
 
-export default connect((state) => {return {tasks: state.tasks, modal: state.modal, selectedTask: state.selectedTask};})(TaskList);
+export default connect((state) => {return {session: state.session, tasks: state.tasks, modal: state.modal, selectedTask: state.selectedTask};})(TaskList);
 

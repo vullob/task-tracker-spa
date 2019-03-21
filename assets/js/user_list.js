@@ -3,8 +3,10 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 
 function UserList(props) {
+  const { session } = props
   let rows = _.map(props.users, (uu) => <User key={uu.id} user={uu} />);
-  return  <table className="table table-striped">
+  return  <React.Fragment>
+    {session && <table className="table table-striped">
         <thead>
           <tr>
             <th>Email</th>
@@ -13,7 +15,8 @@ function UserList(props) {
         <tbody>
           {rows}
         </tbody>
-      </table>
+      </table>}
+    </React.Fragment>
 }
 
 function User(props) {
@@ -23,5 +26,5 @@ function User(props) {
   </tr>
 }
 
-export default connect((state) => {return {users: state.users};})(UserList);
+export default connect((state) => {return {session: state.session, users: state.users};})(UserList);
 
