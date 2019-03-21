@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 
 import Modal from './modal'
+import api from './api'
 
 function TaskList(props) {
   const { session } = props
@@ -19,6 +20,7 @@ function TaskList(props) {
             <th>Minutes Spent</th>
             <th>Completed</th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -27,6 +29,10 @@ function TaskList(props) {
       </table>}
     {props.modal.show && <Modal/>}
     </React.Fragment>
+}
+
+function deleteTask(task){
+  api.delete_task(task)
 }
 
 function createTask(dispatch) {
@@ -75,6 +81,7 @@ function Task(props) {
     <td>{task.minutes_spent}</td>
     <td>{task.completed ? 'yes' : 'no'}</td>
     <td><button className="btn btn-secondary" onClick={(e) => updateSelectedTask(task, dispatch)}>Edit</button></td>
+    <td><button className="btn btn-danger" onClick={() => deleteTask(task)}>Delete</button></td>
   </tr>
 }
 

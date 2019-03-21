@@ -22,7 +22,6 @@ class UserInfo extends React.Component {
     dispatch({
       type: 'CLOSE_SESSION'
     })
-    window.location.reload(true)
   }
 
   render() {

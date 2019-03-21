@@ -115,7 +115,28 @@ class TheServer {
       })
   }
 
-  send_put(path, data, callback, error) {
+  send_delete(path, data, callback, error) {
+      if (!sessionStorage.getItem('token')) return;
+      $.ajax(path, {
+        method: "delete",
+        dataType: "json",
+        contentType: "application/json; charset=UTF-8",
+        data: JSON.stringify(data),
+        success: callback,
+        error: error,
+        headers: {"x-auth": sessionStorage.getItem('token')}
+      });
+    }
+
+  delete_task(task) {
+    this.send_delete(`/api/v1/tasks/${task.id}`,
+      {id: task.id, task: {...task, user_id: task.id}},
+      (resp) => {
+        this.fetch_tasks();
+      })
+  }
+
+  send_patch(path, data, callback, error) {
     if (!sessionStorage.getItem('token')) return;
     $.ajax(path, {
       method: "patch",
@@ -130,7 +151,7 @@ class TheServer {
 
   update_task(task) {
     const newId = task.user ? task.user.id : 0;
-    this.send_put(`/api/v1/tasks/${task.id}`,
+    this.send_patch(`/api/v1/tasks/${task.id}`,
       {id: task.id, task: {...task, user_id: newId}},
       (resp) => {
         store.dispatch({
