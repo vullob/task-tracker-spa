@@ -30,16 +30,18 @@ function updateSelectedTask(task, dispatch){
     type: 'SET_TASK',
     data: task.id
   }
-  const modalAction = {
+   const modalAction = {
     type: 'SHOW_TASK_MODAL',
   }
+ const {title, description, completed, user} = task
+ const taskFormAction = {type: 'SET_TASK_FORM', data: {title, description, completed, user}}
+  dispatch(taskFormAction)
   dispatch(action)
   dispatch(modalAction)
-  $('#taskModal').modal("show")
 }
 
 function Task(props) {
-  let {task, dispatch} = props;
+  let {task, dispatch, tasks} = props;
   return <tr>
     <td>{task.title}</td>
     <td>{task.description}</td>
@@ -49,5 +51,5 @@ function Task(props) {
   </tr>
 }
 
-export default connect((state) => {return {tasks: state.tasks, modal: state.taskModal};})(TaskList);
+export default connect((state) => {return {tasks: state.tasks, modal: state.taskModal, selectedTask: state.selectedTask};})(TaskList);
 

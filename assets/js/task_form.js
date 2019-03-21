@@ -1,0 +1,85 @@
+import React from 'react';
+import {connect} from 'react-redux';
+import _ from 'lodash';
+
+class TaskForm extends React.Component {
+    constructor (props) {
+      super(props)
+      this.changeDescription = this.changeDescription.bind(this)
+      this.changeAssignedUser = this.changeAssignedUser.bind(this)
+      this.changeDescription = this.changeDescription.bind(this)
+      this.changeCompleted = this.changeCompleted.bind(this)
+      this.changeTitle = this.changeTitle.bind(this)
+
+    }
+
+  changeDescription(event) {
+    this.props.dispatch({type: 'UPDATE_TASK_DESCRIPTION', data: event.target.value});
+  }
+
+  changeAssignedUser(event) {
+    const { users } = this.props;
+    const user = users.find((u) => u.id == event.target.value);
+    this.props.dispatch({type: 'UPDATE_TASK_USER', data: user});
+  }
+
+  changeDescription(e) {
+    this.props.dispatch({type: 'UPDATE_TASK_DESCRIPTION', data: e.target.value})
+  }
+
+  changeCompleted(e) {
+    this.props.dispatch({type: 'UPDATE_TASK_COMPLETED', data: e.target.value})
+  }
+
+  changeTitle(e){
+    this.props.dispatch({type: 'UPDATE_TASK_TITLE', data: e.target.value})
+  }
+
+  getUserSelect(){
+    const { users } = this.props;
+    return users.map((user) => <option key={user.id} value={user.id}>{user.email}</option>);
+  }
+
+  render() {
+    debugger;
+    const {title,
+             completed,
+             description,
+             user: {email}} = this.props
+    return <React.Fragment>
+                <div className="row">
+                  <div className="col-12">
+                    <label htmlFor="title">Title</label>
+                    <input className="form-control" type="text" id="title" value={title} onChange={this.changeTitle}/>
+                  </div>
+                </div>
+                 <div className="row">
+                  <div className="col-12">
+                    <label htmlFor="description">Description</label>
+                    <input className="form-control" id="description" type="text" value={description} onChange={this.changeDescription}/>
+                  </div>
+                </div>
+               <div className="row">
+                   <div className="col-12">
+                    <label htmlFor="completed">Completed</label>
+                    <input className="form-control" id="completed" type="checkbox" onChange={this.changeCompleted} value={completed}/>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12">
+                    <label htmlFor="assignedUser">Assigned User</label>
+                    <select className="form-control" id="assignedUser" onChange={this.changeAssignedUser}>
+                      {this.getUserSelect()}
+                    </select>
+                  </div>
+                </div>
+           </React.Fragment>
+  }
+}
+
+export default connect((state) => {return {
+                                            users: state.users,
+                                            selectedTask: state.selectedTask,
+                                            tasks: state.tasks,
+                                            ...state.taskForm
+                                          };})(TaskForm);
