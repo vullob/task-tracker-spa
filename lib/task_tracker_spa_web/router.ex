@@ -29,6 +29,7 @@ defmodule TaskTrackerSpaWeb.Router do
      pipe_through :api
 
      resources "/sessions", SessionController, only: [:create]
+     resources "/users", UserController, only: [:create]
   end
 
   scope "/api/v1", TaskTrackerSpaWeb do

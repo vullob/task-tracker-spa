@@ -5,12 +5,12 @@ export PORT=4796
 
 echo "Stopping old copy of app, if any..."
 
-_build/prod/rel/taskTracker/bin/taskTracker stop || true
+_build/prod/rel/task_tracker_spa/bin/task_tracker_spa stop || true
 
 echo "Starting app..."
 
 
 # Foreground for testing and for systemd
-_build/prod/rel/taskTracker/bin/taskTracker foreground
+_build/prod/rel/task_tracker_spa/bin/task_tracker_spa foreground
 
 
