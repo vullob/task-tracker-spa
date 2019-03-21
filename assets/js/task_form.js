@@ -34,7 +34,7 @@ class TaskForm extends React.Component {
   }
 
   changeCompleted(e) {
-    this.props.dispatch({type: 'UPDATE_TASK_COMPLETED', data: e.target.value})
+    this.props.dispatch({type: 'UPDATE_TASK_COMPLETED', data: e.target.checked})
   }
 
   changeTitle(e){
@@ -74,7 +74,7 @@ class TaskForm extends React.Component {
                <div className="row">
                    <div className="col-12">
                     <label htmlFor="completed">Completed</label>
-                    <input className="form-control" id="completed" type="checkbox" onChange={this.changeCompleted} value={completed}/>
+                    <input className="form-control" id="completed" type="checkbox" onChange={this.changeCompleted} checked={completed}/>
                   </div>
                 </div>
                <div className="row">

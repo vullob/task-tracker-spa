@@ -34,13 +34,14 @@ class TheServer {
       })
   }
 
-  send_post(path, data, callback) {
+  send_post(path, data, callback, error) {
     $.ajax(path, {
       method: "post",
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
       data: JSON.stringify(data),
       success: callback,
+      error: error
     });
   }
 
@@ -49,18 +50,35 @@ class TheServer {
       {email, password},
       (resp) => {
         store.dispatch({
+          type: 'CLEAR_LOGIN_ERROR'
+        })
+        store.dispatch({
           type: "NEW_SESSION",
           data: resp.data,
-        });
-      });
-  }
+        })
+      },
+        (resp) =>{
+          console.log(resp)
+         store.dispatch({
+              type: "LOGIN_ERROR",
+          })
+        })
+      }
 
   create_user(email, password) {
     this.send_post('/api/v1/users',
       {user: {email, password}},
       (resp) => {
+        this.fetch_users()
+        this.create_session(email, password)
         console.log(resp.data)
-      })
+      },
+      (resp) =>{
+          console.log(resp)
+         store.dispatch({
+              type: "LOGIN_ERROR",
+          })
+       })
   }
 
   create_task(task) {
@@ -68,7 +86,25 @@ class TheServer {
     this.send_post('/api/v1/tasks',
       {task: {...task, user_id: newId}},
       (resp) => {
-        console.log(resp.data)})
+        store.dispatch({
+          type: "CLEAR_MODAL_ERRORS",
+        })
+        const action = {
+          type:"HIDE_MODAL",
+        }
+        $('#Modal').modal("hide")
+        store.dispatch(action)
+        this.fetch_tasks();
+        this.fetch_users();
+        console.log(resp.data)
+      },
+      (resp) => {
+        store.dispatch({
+              type: "SET_MODAL_ERRORS",
+              data: Object.values(Object.values(resp.responseJSON)[0]).flatMap((e) => e)
+          })
+
+      })
   }
 
   send_put(path, data, callback, error) {

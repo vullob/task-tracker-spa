@@ -42,6 +42,17 @@ function taskForm(state = {
     }
 }
 
+function login(state = {error: false}, action) {
+  switch(action.type) {
+    case 'LOGIN_ERROR':
+      return {...state, error: true}
+    case 'CLEAR_LOGIN_ERROR':
+      return {...state, error: false}
+    default:
+      return state;
+  }
+}
+
 function modal(state = {show: false, type: '', errors: []}, action) {
   switch (action.type) {
       case 'SHOW_MODAL':
@@ -81,6 +92,8 @@ function session(state = null, action){
   switch (action.type) {
     case 'NEW_SESSION':
         return action.data;
+    case 'CLOSE_SESSION':
+        return null
     default:
       return state;
   }
@@ -104,7 +117,8 @@ function root_reducer(state0, action) {
                                     selectedTask,
                                     modal,
                                     taskForm,
-                                    userForm});
+                                    userForm,
+                                    login});
     const state1 = reducer(state0, action);
     return state1;
 }

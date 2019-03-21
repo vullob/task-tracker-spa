@@ -40,7 +40,9 @@ class UserLogin extends React.Component {
   }
 
   render() {
-    return <div className="row">
+    const {login: {error}} = this.props
+    return <React.Fragment>
+      <div className="row">
               <div className="col-4">
                 <input type="email" placeholder="Email" className="form-control" onChange={this.onEmailChange}></input>
               </div>
@@ -54,8 +56,10 @@ class UserLogin extends React.Component {
                 <button type="button" className="btn btn-primary" onClick={this.onRegister}>Register</button>
               </div>
             </div>
+          {error && <div className="alert alert-danger">
+                          <strong>Invalid Email or Password</strong></div>}
+          </React.Fragment>
   }
 }
 
-export default UserLogin
-
+export default connect((state) => {return {login: state.login};})(UserLogin);
