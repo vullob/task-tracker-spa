@@ -50,6 +50,12 @@ defmodule TaskTrackerSpa.Users do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_user(id) do
+    Repo.one from u in User,
+      where: u.id == ^id,
+      preload: [:tasks]
+  end
+
   @doc """
   Creates a user.
 

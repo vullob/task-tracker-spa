@@ -26,7 +26,8 @@ defmodule TaskTrackerSpaWeb.TaskController do
   end
 
   def update(conn, %{"id" => id, "task" => task_params}) do
-    task = Tasks.get_task!(id)
+    "called" |> IO.inspect
+    task = Tasks.get_task(id)
 
     with {:ok, %Task{} = task} <- Tasks.update_task(task, task_params) do
       render(conn, "show.json", task: task)

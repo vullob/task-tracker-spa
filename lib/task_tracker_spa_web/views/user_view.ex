@@ -12,6 +12,7 @@ defmodule TaskTrackerSpaWeb.UserView do
 
   def render("user.json", %{user: user}) do
     %{id: user.id,
-      email: user.email }
+      email: user.email,
+      tasks: render_many(user[:tasks], TaskTrackerSpaWeb.TaskView, "task.json")}
   end
 end

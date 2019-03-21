@@ -7,6 +7,7 @@ defmodule TaskTrackerSpa.Repo.Migrations.CreateTasks do
       add :description, :string, null: false, default: ""
       add :completed, :boolean, default: false, null: false
       add :user_id, references(:users, on_delete: :nilify_all), null: true, default: nil
+      add :minutes_spent, :integer, null: false, default: 0
       timestamps()
     end
   end

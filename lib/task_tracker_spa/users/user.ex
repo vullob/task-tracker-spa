@@ -7,6 +7,7 @@ defmodule TaskTrackerSpa.Users.User do
     field :password_hash, :string
     field :pw_tries, :integer
     field :pw_last_try, :utc_datetime
+    has_many :tasks, TaskTrackerSpa.Tasks.Task
 
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true

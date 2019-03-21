@@ -18,7 +18,7 @@ defmodule TaskTrackerSpa.Tasks do
 
   """
   def list_tasks do
-    Repo.all(Task) |> Repo.preload(:user) |> IO.inspect
+    Repo.all(Task) |> Repo.preload(:user)
   end
 
   @doc """
@@ -36,8 +36,8 @@ defmodule TaskTrackerSpa.Tasks do
 
   """
   def get_task!(id), do: Repo.get!(Task, id)
-  def get_task(id), do: Repo.get!(Task, id) |> Repo.preload(:user)
 
+  def get_task(id), do: Repo.get!(Task, id) |> Repo.preload(:user)
 
   @doc """
   Creates a task.
