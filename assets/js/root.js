@@ -34,7 +34,6 @@ class Root extends React.Component {
             <Route path="/users" exact={true} component={UserList}/>
             <Route path="/tasks" exact={true} component={TaskList}/>
           </div>
-        <button type="button" className="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
         </div>
       </Router>
     </div>

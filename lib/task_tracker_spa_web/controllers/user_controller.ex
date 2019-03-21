@@ -7,7 +7,7 @@ defmodule TaskTrackerSpaWeb.UserController do
   action_fallback TaskTrackerSpaWeb.FallbackController
 
   def index(conn, _params) do
-    users = Users.list_users()
+    users = Users.list_users() |> IO.inspect
     render(conn, "index.json", users: users)
   end
 

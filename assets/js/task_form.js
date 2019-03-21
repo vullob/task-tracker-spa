@@ -19,7 +19,13 @@ class TaskForm extends React.Component {
 
   changeAssignedUser(event) {
     const { users } = this.props;
-    const user = users.find((u) => u.id == event.target.value);
+    let user;
+    if(event.target.value == 0){
+      user = {id: 0, email: ""}
+    } else {
+      user = users.find((u) => u.id == event.target.value);
+    }
+
     this.props.dispatch({type: 'UPDATE_TASK_USER', data: user});
   }
 
@@ -37,15 +43,16 @@ class TaskForm extends React.Component {
 
   getUserSelect(){
     const { users } = this.props;
-    return users.map((user) => <option key={user.id} value={user.id}>{user.email}</option>);
+    const userOptions = users.map((user) => <option key={user.id} value={user.id}>{user.email}</option>);
+    userOptions.push(<option value={0}></option>)
+    return userOptions
   }
 
   render() {
-    debugger;
     const {title,
              completed,
              description,
-             user: {email}} = this.props
+             user} = this.props
     return <React.Fragment>
                 <div className="row">
                   <div className="col-12">
@@ -68,7 +75,7 @@ class TaskForm extends React.Component {
                 <div className="row">
                   <div className="col-12">
                     <label htmlFor="assignedUser">Assigned User</label>
-                    <select className="form-control" id="assignedUser" onChange={this.changeAssignedUser}>
+                    <select className="form-control" value={user ? user.id : 0}id="assignedUser" onChange={this.changeAssignedUser}>
                       {this.getUserSelect()}
                     </select>
                   </div>

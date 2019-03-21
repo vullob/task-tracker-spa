@@ -18,7 +18,7 @@ defmodule TaskTrackerSpa.Users do
 
   """
   def list_users do
-    Repo.all(User)
+    Repo.all(User) |> Repo.preload(:tasks)
   end
 
   def get_user_by_email(email) do

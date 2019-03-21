@@ -12,38 +12,50 @@ class Modal extends React.Component {
     }
 
   componentDidMount(){
-    $('#taskModal').modal("show")
+    $('#Modal').modal("show")
   }
 
   saveForm(){
-    const { taskForm } = this.props
-    api.update_task(taskForm)
+    const { taskForm, modal: {type} } = this.props
+    switch (type){
+      case 'editTask':
+        api.update_task(taskForm);
+        break;
+      case 'createTask':
+        api.create_task(taskForm);
+        break;
+      default:
+    }
     this.closeModal();
   }
 
   closeModal(){
     const action = {
-      type:"HIDE_TASK_MODAL",
+      type:"HIDE_MODAL",
     }
     this.props.dispatch(action)
-    $('#taskModal').modal("hide")
+    $('#Modal').modal("hide")
     api.fetch_tasks();
     api.fetch_users();
   }
 
   render() {
+    const { modal: {type}} = this.props
     return <div>
-      <div className="modal fade" id="taskModal" tabIndex="-1" role="dialog">
+      <div className="modal fade" id="Modal" tabIndex="-1" role="dialog">
         <div className="modal-dialog modal-lg" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Edit Task</h5>
+              <h5 className="modal-title">
+                {type == 'editTask' && 'Edit Task'}
+                {type == 'createTask' && 'Create New Task'}
+              </h5>
               <button type="button" className="close" onClick={this.closeModal} aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div className="modal-body">
-              <TaskForm/>
+              {(type == 'editTask' || type == 'createTask') && <TaskForm/>}
             </div>
                 <div className="modal-footer">
               <button onClick={this.closeModal} type="button" className="btn btn-secondary">Close</button>
@@ -56,4 +68,4 @@ class Modal extends React.Component {
   }
 }
 
-export default connect((state) => {return {users: state.users, selectedTask: state.selectedTask, tasks: state.tasks, taskForm: state.taskForm};})(Modal);
+export default connect((state) => {return {users: state.users, selectedTask: state.selectedTask, tasks: state.tasks, taskForm: state.taskForm, modal: state.modal};})(Modal);

@@ -16,11 +16,20 @@ defmodule TaskTrackerSpa.Tasks.Task do
   def changeset(task, attrs) do
     task
     |> cast(attrs, [:title, :description, :completed, :user_id, :minutes_spent])
+    |> check_for_null(:user_id)
     |> foreign_key_constraint(:user_id, [message: "user not found"])
     |> validate_length(:title)
     |> validate_length(:description)
     |> validate_minutes_spent(:minutes_spent)
     |> validate_required([:title, :description, :completed])
+  end
+
+  def check_for_null(changeset, field) do
+    cond do
+      Ecto.Changeset.get_field(changeset, field) == 0 -> Ecto.Changeset.put_change(changeset, field, nil)
+      true -> changeset
+    end
+
   end
 
   def validate_length(changeset, field) do

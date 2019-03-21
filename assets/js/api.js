@@ -55,6 +55,13 @@ class TheServer {
       });
   }
 
+  create_task(task) {
+    const newId = task.user ? task.user.id : 0;
+    this.send_post('/api/v1/tasks',
+      {task: {...task, user_id: newId}},
+      (resp) => {console.log(resp.data)})
+  }
+
   send_put(path, data, callback) {
     $.ajax(path, {
       method: "patch",
@@ -66,9 +73,9 @@ class TheServer {
   }
 
   update_task(task) {
-    console.log(task)
+    const newId = task.user ? task.user.id : 0;
     this.send_put(`/api/v1/tasks/${task.id}`,
-      {id: task.id, task},
+      {id: task.id, task: {...task, user_id: newId}},
       (resp) => { console.log(resp.data)})
   }
 }
