@@ -1,4 +1,4 @@
-#Design Choices
+##Design Choices
 
 * Session tokens are stored in the window's sessionstorage to allow them to
   persist over page reloads
@@ -11,7 +11,7 @@
     database.
 
 
-#TaskTrackerSpa
+##TaskTrackerSpa
 
 To start your Phoenix server:
 
